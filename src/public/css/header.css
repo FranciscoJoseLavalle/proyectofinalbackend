@@ -1,0 +1,27 @@
+.header {
+    padding: 2rem;
+    background-color: #fff;
+}
+
+.header a {
+    color: #000;
+}
+
+.header__nav-ul {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header__nav-ul-session {
+    display: flex;
+    gap: .5rem;
+}
+
+.header__nav-ul-session li {
+    border: none;
+    border-radius: .3rem;
+    background-color: #8ae;
+    padding: .5rem;
+}

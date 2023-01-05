@@ -1,0 +1,10 @@
+<div>
+    <p>Inicio</p>
+
+    {{#each products as |product|}}
+    <p>{{product.name}}</p>
+    <p>${{product.price}}</p>
+    <p>Stock: {{product.stock}}</p>
+    <button class="addToCart">Agregar al carrito</button>
+    {{/each}}
+</div>

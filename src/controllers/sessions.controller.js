@@ -38,6 +38,7 @@ const login = async (req, res) => {
         req.session.user = {
             email,
             name: user.first_name,
+            role: user.role,
             id: user._id
         }
         res.send({ status: "success", message: "Logged in succesfully", payload: req.session.user });
@@ -46,7 +47,17 @@ const login = async (req, res) => {
     }
 }
 
+const logout = async (req, res) => {
+    try {
+        req.session.user = null
+        res.send({ status: "success", message: "Logout succesfull"})
+    } catch (error) {
+        res.status(500).send({ status: "error", error: "Internal error", trace: error })
+    }
+}
+
 export default {
     register,
-    login
+    login,
+    logout
 }

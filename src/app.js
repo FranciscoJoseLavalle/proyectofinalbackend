@@ -2,6 +2,7 @@ import express from 'express';
 import config from './config/config.js';
 import sessionsRouter from './routes/sessions.router.js'
 import productsRouter from './routes/products.router.js'
+import cartsRouter from './routes/carts.router.js'
 import viewsRouter from './routes/views.router.js'
 import handlebars from 'express-handlebars';
 import __dirname from './utils.js'
@@ -22,6 +23,10 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }))
+app.use((req, res, next) => {
+    res.locals.session = req.session;
+    next();
+})
 
 // HANDLEBARS
 app.engine("handlebars", handlebars.engine());
@@ -30,6 +35,7 @@ app.set('view engine', 'handlebars')
 
 app.use('/api/sessions', sessionsRouter);
 app.use('/api/products', productsRouter);
+app.use('/api/carts', cartsRouter);
 app.use('/', viewsRouter);
 
 app.listen(PORT, () => {
