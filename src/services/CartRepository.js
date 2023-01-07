@@ -6,12 +6,15 @@ export default class CartRepository extends GenericRepository {
     constructor(dao) {
         super(dao, Cart.model);
     }
+
     findAllProducts = async (params) => {
         let cart = await this.getBy(params, this.model)
         let products = []
 
         for (let i = 0; i < cart.products.length; i++) {
-            products.push(await productService.getBy({ _id: cart.products[i] }))
+            let product = await productService.getBy({ _id: cart.products[i].pid })
+            product.quantity = cart.products[i].quantity;
+            products.push(product)
         }
 
         return products
@@ -27,37 +30,19 @@ export default class CartRepository extends GenericRepository {
             cart.products.push(newProduct)
         }
         let cartUpdated = await this.editOne(params, { products: cart.products })
-        // console.log(cartUpdated)
-        // console.log(cart);
-        // console.log(cartUpdated);
-        // console.log(pid);
-
         return cartUpdated;
-
-
-        // let cart = this.model.find({ _id: object[0]._id }, { products: 1 });
-        // let productsInCart = cart[0].products;
-        // let product = cart[0].products.find(item => item.pid == pid.pid);
-        // let conditionalArray = []
-        // conditionalArray.push(product);
-
-        // if (conditionalArray[0] == null) {
-        //     cart[0].products.push({ pid: pid.pid, quantity: 1 })
-        // } else {
-        //     product.quantity++;
-        // }
-        // this.model.updateOne({ _id: object[0]._id }, { $set: { products: productsInCart } })
-        // // cart.save();
-        // return cart
     }
 
-    deleteProduct = (object, pid) => {
-        let cart = this.model.find({ _id: object[0]._id }, { products: 1 });
-        let productsInCart = cart[0].products;
-        cart[0].products = cart[0].products.filter(item => item.pid != pid);
+    deleteProduct = async (params, pid) => {
+        let cart = await this.getBy(params, this.model)
+        let productID = cart.products.find(product => product.pid === pid)
+        if (productID.quantity > 1) {
+            productID.quantity--
+        } else {
+            cart.products = cart.products.filter(product => product.pid != pid);
+        }
 
-        this.model.updateOne({ _id: object[0]._id }, { $set: { products: cart[0].products } })
-        // cart.save();
-        return cart
+        let cartUpdated = await this.editOne(params, { products: cart.products })
+        return cartUpdated
     }
 }

@@ -6,15 +6,7 @@ export default class Cart {
     }
     static get schema() {
         return {
-            products: [
-                {
-                    product: {
-                        // type: mongoose.SchemaType.ObjectId, // Me tiraba error
-                        pid: String,
-                        quantity: Number
-                    }
-                }
-            ]
+            products: Array
         }
     }
 }
