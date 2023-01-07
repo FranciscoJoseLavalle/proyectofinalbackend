@@ -39,6 +39,7 @@ export default class Dao {
 
     editOne = (params, entity, document) => {
         if (!this.models[entity]) throw new Error('La entidad no existe');
+        console.log(params);
         return this.models[entity].findOneAndUpdate(params, document);
     }
 

@@ -10,45 +10,19 @@ router.get('/', async (req, res) => {
 
 router.get('/:cid/products', async (req, res) => {
     let cid = req.params.cid;
-    let cart = await cartService.getBy({ _id: cid });
-    console.log(cart);
-    let products = [];
-
-    if (cart.products !== undefined) {
-        for (let i = 0; i < cart.products.length; i++) {
-            products.push(await productService.getBy({ pid: cart.products[i].pid }))
-        }
-    }
-    if (cart.products == undefined) {
-        for (let i = 0; i < cart[0].products.length; i++) {
-            products.push(await productService.getBy({ pid: cart[0].products[i].pid }))
-        }
-    }
-
-    if (products.length > 0) {
-        res.send(products);
-    } else {
-        res.send({ status: "error", message: "There isn't products" })
-    }
-
+    let products = await cartService.findAllProducts({ _id: cid })
+    res.send(products);
 })
-
-router.post('/', async (req, res) => {
-    let cart = {
-        products: []
-    }
-    let cartID = await cartService.save(cart);
-    console.log(cartID);
-    res.send({ message: "Added succesfully" });
-})
-
 
 router.post('/:cid/products', async (req, res) => {
     let cid = req.params.cid;
-    let pid = req.body;
+    let { pid } = req.body;
+
+    let cart = await cartService.addProduct({ _id: cid }, pid);
+
     // await cartService.editById(cid, pid);
-    let cart = await cartService.getBy(cid);
-    await cartService.addProduct(cart, pid)
+    // let cart = await cartService.getBy(cid);
+    // await cartService.addProduct(cart, pid)
     // console.log(cart);
     res.send(cart)
 })

@@ -15,6 +15,10 @@
         <nav class="header__nav">
             <ul class="header__nav-ul">
                 <li><a href="/">Inicio</a></li>
+
+                {{#if (isAdmin session.user.role)}}
+                <li class="products"><a href="/products">Agregar productos</a></li>
+                {{/if}}
                 <div class="header__nav-ul-session">
                     {{#if session.user.name}}
                     <li class="logout"><a href="/login">Cerrar sesión</a></li>

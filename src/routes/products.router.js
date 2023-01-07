@@ -4,9 +4,14 @@ import { productService } from '../services/services.js';
 const router = Router();
 
 const adminMiddleware = async (req, res, next) => {
-    let admin = true;
-    if (admin == true) {
-        next();
+    if (req.session.user) {
+        if (req.session.user.role === 'admin') {
+            next();
+        } else {
+            res.send({ status: "error", message: "No tienes los permisos para realizar esta accion" })
+        }
+    } else {
+        res.send({status: "error", message: "Necesitas estar logueado para agregar un producto"})
     }
 }
 
@@ -17,7 +22,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:pid', async (req, res) => {
     let pid = req.params.pid;
-    let product = await productService.getById(pid);
+    let product = await productService.getBy({ _id: pid });
     res.send(product);
 })
 
@@ -31,13 +36,13 @@ router.post('/', adminMiddleware, async (req, res) => {
 router.put('/:pid/', adminMiddleware, async (req, res) => {
     let pid = req.params.pid;
     let productData = await req.body;
-    let product = await productService.editById(pid, productData);
+    let product = await productService.editOne({ _id: pid }, productData);
     res.send({ status: "succesfull", message: "Product edited succesfully" })
 })
 
 router.delete('/:pid/', adminMiddleware, async (req, res) => {
     let pid = req.params.pid;
-    await productService.deleteById(pid);
+    await productService.deleteOne({ _id: pid });
     res.send({ status: "succesfull", message: "Product deleted succesfully" })
 })
 

@@ -29,7 +29,14 @@ app.use((req, res, next) => {
 })
 
 // HANDLEBARS
-app.engine("handlebars", handlebars.engine());
+app.engine("handlebars", handlebars.engine({
+    helpers: {
+        isAdmin: (value) => {
+            if (value === 'admin') return true
+            return false
+        }
+    }
+}));
 app.set('views', __dirname + '/views')
 app.set('view engine', 'handlebars')
 

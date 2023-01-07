@@ -19,4 +19,7 @@ router.get('/data', (req, res) => {
     if (!req.session.user) return res.redirect('/login');
     res.render('data', { user: req.session.user })
 })
+router.get('/products', (req,res) => {
+    res.render('addProducts')
+})
 export default router;

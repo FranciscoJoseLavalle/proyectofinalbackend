@@ -16,9 +16,8 @@ export default class GenericRepository {
         return this.dao.save(data, this.model);
     }
 
-    editOne = (params, entity, document) => {
-        if (!this.models[entity]) throw new Error('La entidad no existe');
-        return this.models[entity].findOneAndUpdate(params, document);
+    editOne = (params, document) => {
+        return this.dao.editOne(params, this.model, document);
     }
 
     deleteOne = (params) => {
