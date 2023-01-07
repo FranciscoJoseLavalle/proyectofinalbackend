@@ -11,7 +11,7 @@ const adminMiddleware = async (req, res, next) => {
             res.send({ status: "error", message: "No tienes los permisos para realizar esta accion" })
         }
     } else {
-        res.send({status: "error", message: "Necesitas estar logueado para agregar un producto"})
+        res.send({ status: "error", message: "Necesitas estar logueado para agregar un producto" })
     }
 }
 
@@ -29,7 +29,6 @@ router.get('/:pid', async (req, res) => {
 router.post('/', adminMiddleware, async (req, res) => {
     let product = await req.body;
     let result = await productService.save(product)
-    console.log(result);
     res.send({ status: "success", message: "New product added" })
 })
 

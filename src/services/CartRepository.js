@@ -20,12 +20,19 @@ export default class CartRepository extends GenericRepository {
     addProduct = async (params, pid) => {
         let cart = await this.getBy(params, this.model)
         let productID = cart.products.find(product => product.pid === pid)
-        let product = { pid: productID, quantity: 1 }
+        if (productID) {
+            productID.quantity++
+        } else {
+            let newProduct = { pid, quantity: 1 }
+            cart.products.push(newProduct)
+        }
+        let cartUpdated = await this.editOne(params, { products: cart.products })
+        // console.log(cartUpdated)
+        // console.log(cart);
+        // console.log(cartUpdated);
+        // console.log(pid);
 
-        console.log(cart);
-        console.log(pid);
-
-        return test;
+        return cartUpdated;
 
 
         // let cart = this.model.find({ _id: object[0]._id }, { products: 1 });

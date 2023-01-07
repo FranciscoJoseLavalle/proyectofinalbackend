@@ -19,11 +19,6 @@ router.post('/:cid/products', async (req, res) => {
     let { pid } = req.body;
 
     let cart = await cartService.addProduct({ _id: cid }, pid);
-
-    // await cartService.editById(cid, pid);
-    // let cart = await cartService.getBy(cid);
-    // await cartService.addProduct(cart, pid)
-    // console.log(cart);
     res.send(cart)
 })
 

@@ -9,9 +9,9 @@ export default class Cart {
             products: [
                 {
                     product: {
-                        // type: mongoose.SchemaType.ObjectId,
-                        type: String,
-                        ref: 'Products'
+                        // type: mongoose.SchemaType.ObjectId, // Me tiraba error
+                        pid: String,
+                        quantity: Number
                     }
                 }
             ]

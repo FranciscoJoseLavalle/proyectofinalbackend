@@ -18,7 +18,7 @@ export default class User {
             avatar: String,
             address: String,
             cart: {
-                // type: mongoose.SchemaType.ObjectId,
+                // type: mongoose.SchemaType.ObjectId, // Me tiraba error
                 type: String,
                 ref: 'Carts'
             }
