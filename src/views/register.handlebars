@@ -1,22 +1,33 @@
-<div>
-    <h1>Registrate :)</h1>
+<link rel="stylesheet" href="css/forms.css">
+<main>
+    <h1>Registrarse</h1>
     <form id="registerForm">
-        <label>Nombre</label>
-        <input type="text" name="first_name">
+        <div>
+            <label>Nombre</label>
+            <input type="text" name="first_name" autofocus="true">
+        </div>
 
-        <label>Apellido</label>
-        <input type="text" name="last_name">
+        <div>
+            <label>Apellido</label>
+            <input type="text" name="last_name">
+        </div>
 
-        <label>Email</label>
-        <input type="email" name="email">
-        
-        <label>Dirección</label>
-        <input type="text" name="address">
+        <div>
+            <label>Email</label>
+            <input type="email" name="email">
+        </div>
 
-        <label>Password</label>
-        <input type="password" name="password">
+        <div>
+            <label>Dirección</label>
+            <input type="text" name="address">
+        </div>
+
+        <div>
+            <label>Password</label>
+            <input type="password" name="password">
+        </div>
         <input type="submit">
     </form>
-</div>
+</main>
 
 <script src="/js/register.js"></script>

@@ -34,8 +34,16 @@ app.engine("handlebars", handlebars.engine({
         isAdmin: (value) => {
             if (value === 'admin') return true
             return false
+        },
+        moreThanOne: (value) => {
+            if (value > 1) return true
+            return false
+        },
+        isTheSamePID: (value, chiche) => {
+            console.log(value, chiche);
         }
-    }
+    },
+    partialsDir: __dirname + '/views/partials'
 }));
 app.set('views', __dirname + '/views')
 app.set('view engine', 'handlebars')

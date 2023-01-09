@@ -34,15 +34,17 @@ router.post('/', adminMiddleware, async (req, res) => {
 
 router.put('/:pid/', adminMiddleware, async (req, res) => {
     let pid = req.params.pid;
-    let productData = await req.body;
-    let product = await productService.editOne({ _id: pid }, productData);
-    res.send({ status: "succesfull", message: "Product edited succesfully" })
+    let { name, price, stock } = await req.body;
+    console.log(name);
+    let product = await productService.editOne({ _id: pid }, { name, price, stock });
+    console.log(product);
+    res.send({ status: "success", message: "Product edited succesfully" })
 })
 
 router.delete('/:pid/', adminMiddleware, async (req, res) => {
     let pid = req.params.pid;
     await productService.deleteOne({ _id: pid });
-    res.send({ status: "succesfull", message: "Product deleted succesfully" })
+    res.send({ status: "success", message: "Product deleted succesfully" })
 })
 
 export default router;

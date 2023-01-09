@@ -13,8 +13,10 @@ export default class CartRepository extends GenericRepository {
 
         for (let i = 0; i < cart.products.length; i++) {
             let product = await productService.getBy({ _id: cart.products[i].pid })
-            product.quantity = cart.products[i].quantity;
-            products.push(product)
+            if (product) {
+                product.quantity = cart.products[i].quantity;
+                products.push(product)
+            }
         }
 
         return products
@@ -36,12 +38,13 @@ export default class CartRepository extends GenericRepository {
     deleteProduct = async (params, pid) => {
         let cart = await this.getBy(params, this.model)
         let productID = cart.products.find(product => product.pid === pid)
-        if (productID.quantity > 1) {
-            productID.quantity--
-        } else {
-            cart.products = cart.products.filter(product => product.pid != pid);
+        if (productID) {
+            if (productID.quantity > 1) {
+                productID.quantity--
+            } else {
+                cart.products = cart.products.filter(product => product.pid != pid);
+            }
         }
-
         let cartUpdated = await this.editOne(params, { products: cart.products })
         return cartUpdated
     }

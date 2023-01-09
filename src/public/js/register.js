@@ -11,5 +11,9 @@ form.addEventListener('submit', (e) => {
         headers: {
             "Content-Type":"application/json"
         }
-    }).then(result => result.json()).then(json => console.log(json))
+    }).then(result => result.json()).then(json => {
+        if (json.status === 'success') {
+            window.location.replace("http://localhost:8080/login");
+        }
+    })
 })

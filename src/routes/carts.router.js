@@ -24,6 +24,7 @@ router.post('/:cid/products', async (req, res) => {
 router.delete('/:cid/products', async (req, res) => {
     let cid = req.params.cid;
     let { pid } = req.body;
+    
 
     let cart = await cartService.deleteProduct({ _id: cid }, pid)
 

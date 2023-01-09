@@ -7,7 +7,8 @@ const router = Router();
 router.get('/', async (req, res) => {
     let products = await productService.getAll();
     res.render('home', {
-        products
+        products,
+        session: req.session
     })
 })
 router.get('/register', (req, res) => {
@@ -20,21 +21,33 @@ router.get('/data', (req, res) => {
     if (!req.session.user) return res.redirect('/login');
     res.render('data', { user: req.session.user })
 })
-router.get('/products', (req, res) => {
+
+router.get('/products', async (req, res) => {
+    try {
+        let products = await productService.getAll();
+        res.render('products', {
+            products
+        })
+    } catch (error) {
+        res.status(500).send({ status: "error", error: "Internal error", trace: error })
+    }
+})
+router.get('/addProducts', (req, res) => {
     res.render('addProducts')
 })
-router.get('/cart', (req, res) => {
-    let products;
-    axios.get(`http://localhost:8080/api/carts/${req.session.user.cart}/products`)
-        .then((response) => {
-            console.log(response.data);
-            products = response.data
-            console.log(products);
-        })
 
-    // console.log(products);
-    res.render('cart', {
-        products
-    })
+router.get('/cart', (req, res) => {
+    try {
+        let products;
+        axios.get(`http://localhost:8080/api/carts/${req.session.user.cart}/products`)
+            .then((response) => {
+                products = response.data
+                res.render('cart', {
+                    products
+                })
+            })
+    } catch (error) {
+        res.status(500).send({ status: "error", error: "Internal error", trace: error })
+    }
 })
 export default router;

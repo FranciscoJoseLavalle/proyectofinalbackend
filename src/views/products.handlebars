@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="css/forms.css">
+<link rel="stylesheet" href="css/productsAdmin.css">
+<main>
+    <h1>Administrar productos</h1>
+    <a href="/addProducts">Agregar productos</a>
+    <section class="product-container-cart">
+        {{#each products as |product|}}
+        <div class="product" id="{{product._id}}">
+            <div class="product-info">
+                <img src="/img/ps4.jpg" alt="productIMG">
+                <div class="product-text">
+                    <h3>{{product.name}}</h3>
+                    <p>${{product.price}}</p>
+                    {{#if (moreThanOne product.quantity)}}
+                    <small>{{product.stock}} unidades</small>
+                    {{else}}
+                    <small>{{product.stock}} unidad</small>
+                    {{/if}}
+                </div>
+            </div>
+            <button class="edit">Editar producto</button>
+            <button class="delete">Eliminar producto</button>
+        </div>
+        {{/each}}
+    </section>
+    <div class="modal">
+    </div>
+</main>
+
+<script src="js/productsAdmin.js"></script>

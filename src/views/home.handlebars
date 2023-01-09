@@ -1,10 +1,21 @@
-<div>
-    <p>Inicio</p>
+<link rel="stylesheet" href="/css/home.css">
+<main>
+    <h1>Inicio</h1>
+    <section class="product-container-home" id="{{session.user.cart}}">
+        {{#each products as |product|}}
+        <div class="product" id="{{product._id}}">
+            <img src="/img/ps4.jpg" alt="productIMG">
+            <div class="product-text">
+                <h3>{{product.name}}</h3>
+                <p>${{product.price}}</p>
+                <small>{{product.stock}} unidades</small>
+            </div>
+            {{#if ../session.user.name }}
+            <button class="addToCart">Agregar al carrito</button>
+            {{/if}}
+        </div>
+        {{/each}}
+    </section>
+</main>
 
-    {{#each products as |product|}}
-    <p>{{product.name}}</p>
-    <p>${{product.price}}</p>
-    <p>Stock: {{product.stock}}</p>
-    <button class="addToCart">Agregar al carrito</button>
-    {{/each}}
-</div>
+<script src="/js/home.js"></script>
