@@ -48,6 +48,8 @@ function createModal(product) {
     const price = document.createElement('input');
     const stock = document.createElement('input');
     const submit = document.createElement('input')
+    const description = document.createElement('input')
+    const thumbnail = document.createElement('input')
 
     name.type = 'text'
     name.name = 'name';
@@ -64,15 +66,27 @@ function createModal(product) {
     stock.placeholder = 'Stock del producto';
     stock.value = product.stock;
 
+    description.type = 'text'
+    description.name = 'description';
+    description.placeholder = 'Descripción del producto';
+    description.value = product.description;
+
+    thumbnail.type = 'text'
+    thumbnail.name = 'thumbnail';
+    thumbnail.placeholder = 'Imagen del producto';
+    thumbnail.value = product.thumbnail;
+
     submit.type = 'submit';
 
-    form.append(name, price, stock, submit);
+    form.append(name, price, stock, description, thumbnail, submit);
     form.onsubmit = (e) => {
         e.preventDefault();
         let obj = {
             name: name.value,
             price: price.value,
-            stock: stock.value
+            stock: stock.value,
+            description: description.value,
+            thumbnail: thumbnail.value
         }
         fetch(`api/products/${PID}`, {
             method: 'PUT',

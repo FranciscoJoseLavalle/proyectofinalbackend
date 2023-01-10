@@ -17,7 +17,8 @@ app.use(express.static(__dirname + '/public'))
 app.use(session({
     secret: 'c0digolarg0',
     store: MongoStore.create({
-        mongoUrl: "mongodb+srv://coder:123@cluster0.lwstatk.mongodb.net/?retryWrites=true&w=majority",
+        // mongoUrl: "mongodb+srv://coder:123@cluster0.lwstatk.mongodb.net/?retryWrites=true&w=majority",
+        mongoUrl: config.mongo.URL,
         ttl: 3600
     }),
     resave: false,
@@ -38,9 +39,6 @@ app.engine("handlebars", handlebars.engine({
         moreThanOne: (value) => {
             if (value > 1) return true
             return false
-        },
-        isTheSamePID: (value, chiche) => {
-            console.log(value, chiche);
         }
     },
     partialsDir: __dirname + '/views/partials'

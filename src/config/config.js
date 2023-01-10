@@ -4,6 +4,5 @@ export default {
     },
     app: {
         PORT: process.env.PORT,
-        URL: process.env.URL
     }
 }

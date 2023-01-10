@@ -21,13 +21,23 @@ router.post('/:cid/products', async (req, res) => {
     res.send(cart)
 })
 
+router.put('/:cid/endbuy', async (req, res) => {
+    try {
+        let cid = req.params.cid;
+        let products = await cartService.endBuy({ _id: cid })
+        if (products.status) {
+            await cartService.emptyCart({ _id: cid })
+        }
+        res.send(products)
+    } catch (error) {
+        return res.status(500).send({ status: "error", error: "Internal error", trace: error })
+    }
+});
+
 router.delete('/:cid/products', async (req, res) => {
     let cid = req.params.cid;
     let { pid } = req.body;
-    
-
     let cart = await cartService.deleteProduct({ _id: cid }, pid)
-
     res.send(cart)
 })
 
