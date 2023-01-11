@@ -1,6 +1,8 @@
 import GenericRepository from "./GenericRepository.js";
 import Cart from "../models/Cart.js";
 import { productService } from "./services.js";
+import nodemailer from 'nodemailer';
+import config from "../config/config.js";
 
 export default class CartRepository extends GenericRepository {
     constructor(dao) {
@@ -31,7 +33,6 @@ export default class CartRepository extends GenericRepository {
             let cart = await this.getBy(params, this.model)
             let productID = cart.products.find(product => product.pid === pid)
             let product = await productService.getBy({ _id: pid })
-            console.log(product);
             if (productID) {
                 if (product.stock > 0 && productID.quantity < product.stock) {
                     productID.quantity++
@@ -48,9 +49,35 @@ export default class CartRepository extends GenericRepository {
 
     }
 
-    endBuy = async (params) => {
+    endBuy = async (params, email) => {
+        console.log(email);
         try {
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                port: 587,
+                auth: {
+                    user: config.mailer.USER,
+                    pass: config.mailer.PASS
+                }
+            });
             let products = await this.findAllProducts(params);
+            let total = 0;
+            let text = ``;
+            products.forEach(product => {
+                total += product.quantity * product.price;
+                text += `<p>${product.name} | ${product.quantity}
+                unidades | ${product.price * product.quantity}</p>`
+            })
+            await transporter.sendMail({
+                from: 'Yo',
+                to: ['franlavalle@hotmail.com', email],
+                subject: 'Resumen de compra',
+                html: `<div>
+                            <h3>Este es su resumen de compra en <a href="${config.app.URL}">${config.app.URL}</a></h3>
+                            <div>${text}</div>
+                            <small>Total: ${total}</small>
+                        </div>`
+            })
             await productService.restStock(products)
             return { status: 'success', message: "Compra realizada satisfactoriamete" }
         } catch (error) {

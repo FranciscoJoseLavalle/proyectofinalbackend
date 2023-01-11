@@ -7,7 +7,6 @@ addBtn.forEach(btn => {
 function addToCart(e) {
     let productID = e.target.parentNode.id;
     let cartID = e.target.parentNode.parentNode.id;
-    console.log(cartID);
     fetch(`api/carts/${cartID}/products`, {
         method: 'POST',
         body: JSON.stringify({ pid: productID }),

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { productService } from '../services/services.js';
+import config from '../config/config.js';
 import axios from 'axios';
 
 const router = Router();
@@ -39,7 +40,7 @@ router.get('/addProducts', (req, res) => {
 router.get('/cart', (req, res) => {
     try {
         let products;
-        axios.get(`http://localhost:8080/api/carts/${req.session.user.cart}/products`)
+        axios.get(`${config.app.URL}/api/carts/${req.session.user.cart}/products`)
             .then((response) => {
                 products = response.data
                 res.render('cart', {

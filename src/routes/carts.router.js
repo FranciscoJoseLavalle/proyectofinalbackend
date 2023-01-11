@@ -24,7 +24,8 @@ router.post('/:cid/products', async (req, res) => {
 router.put('/:cid/endbuy', async (req, res) => {
     try {
         let cid = req.params.cid;
-        let products = await cartService.endBuy({ _id: cid })
+        let email = req.session.user.email
+        let products = await cartService.endBuy({ _id: cid }, email)
         if (products.status) {
             await cartService.emptyCart({ _id: cid })
         }

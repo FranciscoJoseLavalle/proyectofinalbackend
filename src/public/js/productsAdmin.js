@@ -40,9 +40,7 @@ function openModal(e) {
 }
 
 function createModal(product) {
-    console.log(PID);
     modalContainer.textContent = ''
-    console.log(product);
     const form = document.createElement('form');
     const name = document.createElement('input');
     const price = document.createElement('input');

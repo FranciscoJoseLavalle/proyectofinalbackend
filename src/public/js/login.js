@@ -13,7 +13,7 @@ form.addEventListener('submit', (e) => {
         }
     }).then(result => result.json()).then(json => {
         if (json.status === 'success') {
-            window.location.replace("http://localhost:8080/");
+            window.location.replace("/");
         }
     })
 })

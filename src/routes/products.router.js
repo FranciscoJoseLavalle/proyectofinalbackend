@@ -35,9 +35,7 @@ router.post('/', adminMiddleware, async (req, res) => {
 router.put('/:pid/', adminMiddleware, async (req, res) => {
     let pid = req.params.pid;
     let { name, price, stock, description, thumbnail } = req.body;
-    console.log(name);
     let product = await productService.editOne({ _id: pid }, { name, price, stock, description, thumbnail });
-    console.log(product);
     res.send({ status: "success", message: "Product edited succesfully" })
 })
 
