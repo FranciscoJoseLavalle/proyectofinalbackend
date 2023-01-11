@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { productService } from '../services/services.js';
+import { uploader } from '../utils.js';
 
 const router = Router();
 
@@ -26,8 +27,11 @@ router.get('/:pid', async (req, res) => {
     res.send(product);
 })
 
-router.post('/', adminMiddleware, async (req, res) => {
+router.post('/', adminMiddleware, uploader.single('file'), async (req, res) => {
     let product = await req.body;
+    console.log(req.file);
+    product.thumbnail = `${req.protocol}://${req.host}:${process.env.PORT}/img/${req.file.filename}`
+    console.log(product);
     let result = await productService.save(product)
     res.send({ status: "success", message: "New product added" })
 })

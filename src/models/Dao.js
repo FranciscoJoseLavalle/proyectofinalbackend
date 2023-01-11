@@ -9,7 +9,6 @@ import config from '../config/config.js';
 export default class Dao {
     constructor() {
         mongoose.set("strictQuery", false);
-        // this.connection = mongoose.connect("mongodb+srv://coder:123@cluster0.lwstatk.mongodb.net/?retryWrites=true&w=majority")
         this.connection = mongoose.connect(config.mongo.URL)
 
         const userSchema = mongoose.Schema(User.schema)

@@ -5,6 +5,7 @@ export default {
     app: {
         PORT: process.env.PORT,
         URL: process.env.URL,
+        SECRET: process.env.SESSION_SECRET
     },
     mailer: {
         USER: process.env.MAILER_USER,

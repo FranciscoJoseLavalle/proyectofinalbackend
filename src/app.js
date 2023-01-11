@@ -15,9 +15,8 @@ const PORT = config.app.PORT || 8080;
 app.use(express.json());
 app.use(express.static(__dirname + '/public'))
 app.use(session({
-    secret: 'c0digolarg0',
+    secret: config.app.SECRET,
     store: MongoStore.create({
-        // mongoUrl: "mongodb+srv://coder:123@cluster0.lwstatk.mongodb.net/?retryWrites=true&w=majority",
         mongoUrl: config.mongo.URL,
         ttl: 3600
     }),
