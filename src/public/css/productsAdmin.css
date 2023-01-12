@@ -5,3 +5,19 @@ body {
 * {
     color: #000;
 }
+
+.product-container-cart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.product {
+    width: 75%;
+    max-width: 35rem;
+}
+
+img {
+    width: 100%;
+}

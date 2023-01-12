@@ -1,54 +1,19 @@
 import { Router } from 'express';
-import { productService } from '../services/services.js';
-import config from '../config/config.js';
-import axios from 'axios';
+import productsController from '../controllers/products.controller.js'
+import viewsController from '../controllers/views.controller.js';
 
 const router = Router();
 
-router.get('/', async (req, res) => {
-    let products = await productService.getAll();
-    res.render('home', {
-        products,
-        session: req.session
-    })
-})
-router.get('/register', (req, res) => {
-    res.render('register')
-})
-router.get('/login', (req, res) => {
-    res.render('login')
-})
-router.get('/data', (req, res) => {
-    if (!req.session.user) return res.redirect('/login');
-    res.render('data', { user: req.session.user })
-})
+router.get('/', viewsController.home);
 
-router.get('/products', async (req, res) => {
-    try {
-        let products = await productService.getAll();
-        res.render('products', {
-            products
-        })
-    } catch (error) {
-        res.status(500).send({ status: "error", error: "Internal error", trace: error })
-    }
-})
-router.get('/addProducts', (req, res) => {
-    res.render('addProducts')
-})
+router.get('/register', viewsController.register);
 
-router.get('/cart', (req, res) => {
-    try {
-        let products;
-        axios.get(`${config.app.URL}/api/carts/${req.session.user.cart}/products`)
-            .then((response) => {
-                products = response.data
-                res.render('cart', {
-                    products
-                })
-            })
-    } catch (error) {
-        res.status(500).send({ status: "error", error: "Internal error", trace: error })
-    }
-})
+router.get('/login', viewsController.login);
+
+router.get('/products', productsController.adminMiddleware, viewsController.products);
+
+router.get('/addProducts', productsController.adminMiddleware, viewsController.addProducts);
+
+router.get('/cart', viewsController.cart)
+
 export default router;

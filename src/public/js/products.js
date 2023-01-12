@@ -5,7 +5,6 @@ form.addEventListener('submit', (e) => {
     let data = new FormData(form);
     let obj = {};
     data.forEach((value, key) => obj[key] = value);
-    console.log(data);
     fetch('api/products/', {
         method: 'POST',
         body: data,

@@ -30,6 +30,7 @@
                     {{#if session.user.name}}
                     <li class="cart"><a href="/cart"><img src="/img/cart.png" alt="Carrito"></a></li>
                     <li class="logout"><a href="/login">Cerrar sesión</a></li>
+                    <li class="avatar"><img src="{{session.user.avatar}}" alt="Avatar"></li>
                     {{else}}
                     <li><a href="/login">Iniciar sesión</a></li>
                     <li><a href="/register">Registrarse</a></li>
@@ -40,6 +41,7 @@
     </header>
     {{{body}}}
 
+    <footer>Desarrollado por: Francisco Lavalle</footer>
     <script src="js/logout.js"></script>
 </body>
 

@@ -50,7 +50,6 @@ export default class CartRepository extends GenericRepository {
     }
 
     endBuy = async (params, email) => {
-        console.log(email);
         try {
             const transporter = nodemailer.createTransport({
                 service: 'gmail',

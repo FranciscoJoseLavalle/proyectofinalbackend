@@ -17,7 +17,7 @@ const register = async (req, res) => {
             password: hashedPassword,
             cart: cart._id,
             // avatar: "Aa"
-            avatar: `${req.protocol}://${req.host}:${process.env.PORT}/img/${req.file.filename}`
+            avatar: `/img/${req.file.filename}`
         }
         let result = await userService.save(newUser);
         res.send({ status: "success", message: "User registered" });
@@ -40,7 +40,8 @@ const login = async (req, res) => {
             name: user.first_name,
             role: user.role,
             cart: user.cart,
-            id: user._id
+            id: user._id,
+            avatar: user.avatar
         }
         res.send({ status: "success", message: "Logged in succesfully", payload: req.session.user });
     } catch (error) {

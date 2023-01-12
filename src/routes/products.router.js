@@ -1,52 +1,19 @@
 import { Router } from 'express';
-import { productService } from '../services/services.js';
 import { uploader } from '../utils.js';
+import productsController from '../controllers/products.controller.js'
 
 const router = Router();
 
-const adminMiddleware = async (req, res, next) => {
-    if (req.session.user) {
-        if (req.session.user.role === 'admin') {
-            next();
-        } else {
-            res.send({ status: "error", message: "No tienes los permisos para realizar esta accion" })
-        }
-    } else {
-        res.send({ status: "error", message: "Necesitas estar logueado para agregar un producto" })
-    }
-}
+let adminMiddleware = productsController.adminMiddleware;
 
-router.get('/', async (req, res) => {
-    let products = await productService.getAll();
-    res.send(products)
-})
+router.get('/', productsController.findAllproducts)
 
-router.get('/:pid', async (req, res) => {
-    let pid = req.params.pid;
-    let product = await productService.getBy({ _id: pid });
-    res.send(product);
-})
+router.get('/:pid', productsController.findProductsBy)
 
-router.post('/', adminMiddleware, uploader.single('file'), async (req, res) => {
-    let product = await req.body;
-    console.log(req.file);
-    product.thumbnail = `${req.protocol}://${req.host}:${process.env.PORT}/img/${req.file.filename}`
-    console.log(product);
-    let result = await productService.save(product)
-    res.send({ status: "success", message: "New product added" })
-})
+router.post('/', adminMiddleware, uploader.single('file'), productsController.addProduct)
 
-router.put('/:pid/', adminMiddleware, async (req, res) => {
-    let pid = req.params.pid;
-    let { name, price, stock, description, thumbnail } = req.body;
-    let product = await productService.editOne({ _id: pid }, { name, price, stock, description, thumbnail });
-    res.send({ status: "success", message: "Product edited succesfully" })
-})
+router.put('/:pid/', adminMiddleware, productsController.editProduct)
 
-router.delete('/:pid/', adminMiddleware, async (req, res) => {
-    let pid = req.params.pid;
-    await productService.deleteOne({ _id: pid });
-    res.send({ status: "success", message: "Product deleted succesfully" })
-})
+router.delete('/:pid/', adminMiddleware, productsController.deleteProduct)
 
 export default router;

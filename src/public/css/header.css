@@ -39,12 +39,19 @@
     color: #fff;
 }
 
-.header__nav-ul-session .cart {
+.header__nav-ul-session .cart,
+.header__nav-ul-session .avatar {
     background-color: transparent;
 }
 
 .header__nav-ul-session .cart img {
     width: 3rem;
+}
+
+.header__nav-ul-session .avatar img {
+    border-radius: 50%;
+    width: 4rem;
+    aspect-ratio: 1 / 1;
 }
 
 .header__nav-ul-session .logout {
@@ -57,4 +64,11 @@
 
 .header__nav-ul-session .logout a {
     color: #fff;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .header__nav-ul {
+        flex-direction: column;
+    }
 }
