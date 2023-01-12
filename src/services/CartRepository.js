@@ -65,7 +65,7 @@ export default class CartRepository extends GenericRepository {
             products.forEach(product => {
                 total += product.quantity * product.price;
                 text += `<p>${product.name} | ${product.quantity}
-                unidades | ${product.price * product.quantity}</p>`
+                unidades | $${product.price * product.quantity}</p>`
             })
             await transporter.sendMail({
                 from: 'Yo',
@@ -74,7 +74,8 @@ export default class CartRepository extends GenericRepository {
                 html: `<div>
                             <h3>Este es su resumen de compra en <a href="${config.app.URL}">${config.app.URL}</a></h3>
                             <div>${text}</div>
-                            <small>Total: ${total}</small>
+                            <p>Email: ${email}</p>
+                            <small>Total: $${total}</small>
                         </div>`
             })
             await productService.restStock(products)
