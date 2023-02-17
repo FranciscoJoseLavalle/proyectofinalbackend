@@ -2,6 +2,8 @@ const restBtn = document.querySelectorAll('.restToCart');
 const addBtn = document.querySelectorAll('.addToCart');
 const endBtn = document.querySelector('.end');
 
+document.addEventListener('DOMContentLoaded', getTotalProducts)
+
 addBtn.forEach(btn => {
     btn.addEventListener('click', addToCart);
 })
@@ -41,9 +43,12 @@ function restToCart(e) {
 }
 
 endBtn.addEventListener('click', (e) => endBuy(e));
+const productContainer = document.querySelector('.product-container-cart')
 
 function endBuy(e) {
     let cartID = e.target.parentNode.id
+    let loader = '<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>'
+    productContainer.innerHTML = loader;
     fetch(`api/carts/${cartID}/endbuy`, {
         method: 'PUT',
         headers: {
@@ -54,4 +59,16 @@ function endBuy(e) {
             location.reload();
         }
     })
+}
+
+const totalProducts = document.querySelectorAll('.totalProducts');
+
+function getTotalProducts() {
+    fetch(`api/carts/${totalProducts[0].id}/products/quantity`)
+        .then(data => data.json())
+        .then(data => {
+            totalProducts.forEach(element => {
+                element.textContent = data.result
+            })
+        })
 }

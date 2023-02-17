@@ -1,7 +1,9 @@
-const logout = document.querySelector('.logout');
+const logout = document.querySelectorAll('.logout');
 
 if (logout) {
-    logout.addEventListener('click', desloguear);
+    logout.forEach(el => {
+        el.addEventListener('click', desloguear);
+    })
 }
 
 function desloguear() {

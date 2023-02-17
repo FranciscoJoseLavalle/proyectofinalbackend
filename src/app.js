@@ -8,6 +8,7 @@ import handlebars from 'express-handlebars';
 import __dirname from './utils.js'
 import MongoStore from "connect-mongo";
 import session from "express-session";
+import { cartService } from './services/services.js';
 
 const app = express();
 const PORT = config.app.PORT || 8080;

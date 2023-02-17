@@ -7,6 +7,8 @@ router.get('/', cartsController.findAllCarts);
 
 router.get('/:cid/products', cartsController.findCartsBy);
 
+router.get('/:cid/products/quantity', cartsController.getTotalProductsQuantity);
+
 router.post('/:cid/products', cartsController.addProductToCart);
 
 router.put('/:cid/endbuy', cartsController.endBuy);

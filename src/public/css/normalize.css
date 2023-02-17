@@ -8,6 +8,7 @@ font-family: 'Open Sans', sans-serif; */
     list-style: none;
     text-decoration: none;
     font-family: 'Open Sans', sans-serif;
+    -webkit-tap-highlight-color: transparent;
 }
 
 h1,

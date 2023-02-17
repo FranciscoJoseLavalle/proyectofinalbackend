@@ -86,6 +86,20 @@ export default class CartRepository extends GenericRepository {
 
     }
 
+    allProductsQuantity = async (params) => {
+        try {
+            const products = await this.findAllProducts(params);
+            let totalQuantity = 0;
+            products.forEach(product => {
+                totalQuantity += product.quantity;
+            })
+            return totalQuantity;
+        } catch (error) {
+            return { status: "error", error: "Internal error", trace: error }
+        }
+
+    }
+
     emptyCart = async (params) => {
         try {
             await this.editOne(params, { products: [] })

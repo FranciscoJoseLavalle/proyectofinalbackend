@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <link rel="icon" href="img/icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -10,16 +11,58 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
+    <title>e-Commerce</title>
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/normalize.css">
 </head>
 
 <body>
     <header class="header">
+        <li class="homeIcon mobile"><a href="/"><img src="/img/icon.png" alt="Icono"></a></li>
+        <div class="mobile-cart-icon mobile">
+
+            {{#if session.user.name}}
+            <li class="cart">
+                <p class="totalProducts" id={{session.user.cart}}>0</p>
+                <a href="/cart"><img src="/img/cart.png" alt="Carrito"></a>
+            </li>
+            {{/if}}
+            <div class="burga">
+                <div class="burgas"></div>
+                <div class="burgas"></div>
+                <div class="burgas"></div>
+            </div>
+        </div>
+        <nav class="header__nav-mobile">
+            <ul class="header__nav-ul">
+                <div class="header__nav-ul-session">
+                    {{#if session.user.name}}
+                    <li class="user">
+                        <p>¡Bienvenido, {{session.user.fullName}}!</p>
+                    </li>
+                    <li class="avatar"><img src="{{session.user.avatar}}" alt="Avatar"></li>
+                    {{else}}
+                    <li style="padding: .75rem;"><a href="/login">Iniciar sesión</a></li>
+                    <li style="padding: .75rem;"><a href="/register">Registrarse</a></li>
+                    {{/if}}
+                </div>
+                <div class="header__nav-ul-views">
+
+                    <li><a href="/">Inicio</a></li>
+
+                    {{#if (isAdmin session.user.role)}}
+                    <li class="products"><a href="/products">Productos</a></li>
+                    {{/if}}
+                    {{#if session.user.name}}
+                    <li class="logout"><a href="/login">Cerrar sesión</a></li>
+                    {{/if}}
+                </div>
+            </ul>
+        </nav>
         <nav class="header__nav">
             <ul class="header__nav-ul">
                 <div class="header__nav-ul-views">
+                    <li class="homeIcon"><a href="/"><img src="/img/icon.png" alt="Icono"></a></li>
                     <li><a href="/">Inicio</a></li>
 
                     {{#if (isAdmin session.user.role)}}
@@ -28,9 +71,18 @@
                 </div>
                 <div class="header__nav-ul-session">
                     {{#if session.user.name}}
-                    <li class="cart"><a href="/cart"><img src="/img/cart.png" alt="Carrito"></a></li>
-                    <li class="logout"><a href="/login">Cerrar sesión</a></li>
-                    <li class="avatar"><img src="{{session.user.avatar}}" alt="Avatar"></li>
+
+                    <li class="cart">
+                        <p class="totalProducts" id={{session.user.cart}}>0</p>
+                        <a href="/cart"><img src="/img/cart.png" alt="Carrito"></a>
+                    </li>
+                    <div class="userContainer">
+                        <li class="user">
+                            <p>¡Bienvenido, {{session.user.fullName}}!</p>
+                        </li>
+                        <li class="avatar"><img src="{{session.user.avatar}}" alt="Avatar"></li>
+                        <li class="logout"><a href="/login">Cerrar sesión</a></li>
+                    </div>
                     {{else}}
                     <li><a href="/login">Iniciar sesión</a></li>
                     <li><a href="/register">Registrarse</a></li>
@@ -42,6 +94,7 @@
     {{{body}}}
 
     <footer>Desarrollado por: Francisco Lavalle</footer>
+    <script src="js/header.js"></script>
     <script src="js/logout.js"></script>
 </body>
 

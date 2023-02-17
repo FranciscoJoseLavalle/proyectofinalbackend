@@ -19,6 +19,16 @@ const findCartsBy = async (req, res) => {
     }
 }
 
+const getTotalProductsQuantity = async (req, res) => {
+    try {
+        let cid = req.params.cid;
+        let result = await cartService.allProductsQuantity({ _id: cid })
+        res.send({ result });
+    } catch (error) {
+        res.status(500).send({ status: "error", error: "Internal error", trace: error })
+    }
+}
+
 const addProductToCart = async (req, res) => {
     try {
         let cid = req.params.cid;
@@ -58,6 +68,7 @@ const deleteProductFromCart = async (req, res) => {
 export default {
     findAllCarts,
     findCartsBy,
+    getTotalProductsQuantity,
     addProductToCart,
     endBuy,
     deleteProductFromCart
